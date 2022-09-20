@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/* 
- * 이동 스크립트
- * 횡스크롤도 된다
- * 
- */
-
 namespace Elang
 {
+    /// <summary>
+    /// <br> This is a very basic 2d top down physics module. </br>
+    /// </summary>
     [RequireComponent(typeof(BoxCollider2D))]
     [RequireComponent(typeof(Rigidbody2D))]
     public class TopDown2D : MonoBehaviour

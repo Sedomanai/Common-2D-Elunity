@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Elang
 {
-    public class BoxCaster : MonoBehaviour
+    public class BoxCaster2D : MonoBehaviour
     {
         BoxCollider2D _box;
 
@@ -48,12 +48,5 @@ namespace Elang
                 transform.position += new Vector3(0, diry, 0);
             }
         }
-
-        // Update is called once per frame
-        void Update() {
-
-        }
     }
-
-
 }

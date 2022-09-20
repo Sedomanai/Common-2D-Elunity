@@ -5,6 +5,9 @@ using UnityEngine.Events;
 
 namespace Elang
 {   
+    /// <summary>
+    /// Component to attach jumping behavior to Player.
+    /// </summary>
     public class Jump2DModule : MonoBehaviour
     {
         public float jumpHeight = 4;
@@ -15,8 +18,6 @@ namespace Elang
         public float AbsoluteYAxis { get; private set; }
 
         uint _jumpCountLeft;
-
-        // for scrolling maps
 
 
         public float JumpVelocity { get { return KinematicEquation.U_SVA(jumpHeight, 0.0f, Physics2D.gravity.y); } }

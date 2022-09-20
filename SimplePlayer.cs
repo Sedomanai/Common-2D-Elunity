@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-// This is just a template class. In reality you want something more fine tuned to your game. 
-// You can either inherit directly from SimpleMover or this SimplePlayer class to get you started.
-// (그냥 템플릿. 실제로는 플레이어마다 개별 클래스를 작성해야 한다.)
+// 
+// 
+
 namespace Elang {
+
+    /// <summary>
+    /// <br> This is just a template class. In reality you want something more fine tuned to your game. </br>
+    /// <br> You can either inherit directly from Platformer2D or this SimplePlayer class to get you started. </br>
+    /// </summary>
     public class SimplePlayer : Platformer2D
     {
         Animator[] _anims;
