@@ -7,36 +7,47 @@
             "actions": [
                 {
                     "name": "Horizontal",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "64ae8dda-cc1c-4ab0-bb19-5af496cf1656",
                     "expectedControlType": "Axis",
                     "processors": "",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "initialStateCheck": true
                 }
             ],
             "bindings": [
                 {
-                    "name": "",
-                    "id": "2d637eb1-30c4-492e-820f-a03ea7b2ec5c",
+                    "name": "1D Axis",
+                    "id": "97927f6b-635b-484a-847b-3a95e1291536",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Horizontal",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "cc11e194-09a2-4c61-9b96-ff7fd65a09a0",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Horizontal",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "c6ec822a-fe67-40bf-a26b-3cd2b774848e",
+                    "name": "positive",
+                    "id": "ff87a862-019a-4467-9e8a-e429e0df1742",
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Horizontal",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 }
             ]
         }

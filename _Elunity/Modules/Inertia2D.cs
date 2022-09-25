@@ -19,7 +19,6 @@ namespace Elang {
             if (resetOnDisable)
                 ResetValues();
         }
-
         public void ResetValues() {
             moveSpeed = new Vector2(0.0f, 0.0f);
             moveAccel = new Vector2(0.0f, 0.0f);
