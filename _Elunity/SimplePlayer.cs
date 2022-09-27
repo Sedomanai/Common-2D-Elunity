@@ -31,7 +31,7 @@ namespace Elang {
         }
 
         void Update() {
-            UpdatePlatformer(true);
+            UpdatePlatformer();
 
             //_justShot = false;
             //if (acceptControls && Input.GetAxis("Fire1") > 0.01f && _gun) {

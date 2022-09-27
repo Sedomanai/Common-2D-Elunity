@@ -22,15 +22,15 @@ namespace Elang
         }
 
         void Update() {
-            if (Input.GetKeyDown(KeyCode.DownArrow) && !TimeMgr.Instance.Paused && checker) {
-                OnCheck.Invoke();
-                _anim.Play(_openDoorState);
-            }
+            //if (Input.GetKeyDown(KeyCode.DownArrow) && !TimeMgr.Instance.Paused && checker) {
+            //    OnCheck.Invoke();
+            //    _anim.Play(_openDoorState);
+            //}
         }
 
         public void NextState() {
-            var pos = destination.transform.position;
-            checker.transform.position = new Vector3(pos.x, pos.y, checker.transform.position.z);
+            //var pos = destination.transform.position;
+            //checker.transform.position = new Vector3(pos.x, pos.y, checker.transform.position.z);
         }
     }
 }

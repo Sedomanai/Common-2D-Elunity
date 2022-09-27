@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Elang
 {
@@ -9,17 +10,13 @@ namespace Elang
     /// </summary>
     [RequireComponent(typeof(BoxCollider2D))]
     [RequireComponent(typeof(Rigidbody2D))]
-    public class TopDown2D : MonoBehaviour
+    public class TopDown2D : Move2D
     {
-        
         protected Vector2 _axis;
         protected BoxCollider2D _box;
         protected Rigidbody2D _body;
 
-        public bool acceptControls = true;
-        public float speed = 5;
-
-        void setupBody() {
+        void SetupBody() {
             _body = gameObject.GetComponent<Rigidbody2D>();
             _body.angularDrag = 0;
             _body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
@@ -28,7 +25,7 @@ namespace Elang
             _body.freezeRotation = true;
         }
 
-        void setupBox() {
+        void SetupBox() {
             _box = gameObject.GetComponent<BoxCollider2D>();
             _box.isTrigger = false;
 
@@ -53,19 +50,13 @@ namespace Elang
         }
 
         protected virtual void Awake() {
-            setupBox();
-            setupBody();
-
+            SetupBox();
+            SetupBody();
             _body.gravityScale = 0;
-            //_mask.Add("Wall", "Enemy", "Player", "Collider");
-            //_mask.Remove(LayerMask.LayerToName(gameObject.layer));
         }
 
         void Update() {
-            _axis.x = acceptControls ? Input.GetAxis("Horizontal") * speed : 0.0f;
-            _axis.y = acceptControls ? Input.GetAxis("Vertical") * speed : 0.0f;
-
-            _body.velocity = _axis;
+            Move(_body);
         }
     }
 

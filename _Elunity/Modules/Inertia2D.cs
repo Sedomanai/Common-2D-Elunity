@@ -13,7 +13,6 @@ namespace Elang {
         public float rotateSpeed;
         public bool rotateToMovement;
         public bool resetOnDisable;
-        //public Transform faceTransform;
 
         void OnDisable() {
             if (resetOnDisable)

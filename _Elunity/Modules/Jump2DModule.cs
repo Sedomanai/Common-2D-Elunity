@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 namespace Elang
 {   
@@ -19,7 +20,6 @@ namespace Elang
 
         uint _jumpCountLeft;
 
-
         public float JumpVelocity { get { return KinematicEquation.U_SVA(jumpHeight, 0.0f, Physics2D.gravity.y); } }
 
         public bool IsGround { get { return _jumpCountLeft == jumpCount; } }
@@ -29,8 +29,9 @@ namespace Elang
         public void ApplyGravityTo(Inertia2D inertia) {
             inertia.moveAccel = Physics2D.gravity;
         }
+
         public bool JumpWith(ref Vector2 axis) {
-            if (_jumpCountLeft > 0 && !TimeMgr.Instance.Paused) {
+            if (_jumpCountLeft > 0) {
                 JustJumped = Jumping = true;
                 _jumpCountLeft--;
                 axis.x += jumpWidth;
@@ -41,7 +42,7 @@ namespace Elang
         }
 
         public bool JumpWith(Inertia2D inertia) {
-            if (_jumpCountLeft > 0 && !TimeMgr.Instance.Paused) {
+            if (_jumpCountLeft > 0) {
                 JustJumped = Jumping = true;
                 inertia.moveSpeed.x = jumpWidth;
                 inertia.moveSpeed.y = JumpVelocity;

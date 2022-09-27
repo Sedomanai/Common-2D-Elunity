@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Elang
 {
@@ -8,9 +9,11 @@ namespace Elang
     [RequireComponent(typeof(Jump2DModule))]
     public class Platformer2D : TopDown2D
     {
-        public KeyCode jumpKey;
-        protected Jump2DModule _jump;
+        [SerializeField]
+        InputActionReference _jumpAction;
+
         public LayerMask mask;
+        protected Jump2DModule _jump;
 
         override protected void Awake() {
             base.Awake();
@@ -21,14 +24,14 @@ namespace Elang
 
         // Update is called once per frame
         void Update() {
-            UpdatePlatformer(true);
+            UpdatePlatformer();
         }
 
-        protected void UpdatePlatformer(bool acceptJump) {
-            _axis.x = acceptControls ? Input.GetAxisRaw("Horizontal") * speed * TimeMgr.Instance.TimeScale : 0.0f;
+        protected void UpdatePlatformer() {
+            _axis.x = Direction.x;
             _axis.y = _body.velocity.y;
-
-            if (acceptJump) {
+            
+            if (_jumpAction.action.enabled) {
                 var halfWidth = new Vector3(_box.size.x / 2.0f - 0.02f, 0, 0);
                 var distance = _box.size.y / 2.0f + 0.02f;
                 Vector3 center = _box.bounds.center;
@@ -37,17 +40,13 @@ namespace Elang
                 RaycastHit2D rhit = Physics2D.Raycast(center + halfWidth, Vector2.down, distance, mask);
                 _jump.JumpPreCheck(mhit || lhit || rhit);
 
-
+#if UNITY_EDITOR
                 Debug.DrawRay(center, Vector2.down * distance, Color.green);
                 Debug.DrawRay(center - halfWidth, Vector2.down * distance, Color.green);
                 Debug.DrawRay(center + halfWidth, Vector2.down * distance, Color.green);
-
-                if (acceptControls) {
-                    if (Input.GetKeyDown(jumpKey)) {
-                        _jump.JumpWith(ref _axis);
-                    }
-                }
-
+#endif
+                if (_jumpAction.action.triggered)
+                    _jump.JumpWith(ref _axis);
             }
             _body.velocity = _axis;
         }
