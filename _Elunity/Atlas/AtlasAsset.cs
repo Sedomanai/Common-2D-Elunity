@@ -51,27 +51,48 @@ namespace Elang
             Generate();
         }
 
+        public void Clear() {
+            foreach (var texture in textures) {
+                var path = AssetDatabase.GetAssetPath(texture);
+                TextureImporter ti = AssetImporter.GetAtPath(path) as TextureImporter;
+
+                var metaPath = path + ".meta";
+                if (File.Exists(metaPath)) {
+                    TextureImporterSettings settings = new();
+                    ti.ReadTextureSettings(settings);
+                    var pset = ti.GetDefaultPlatformTextureSettings();
+                    File.Delete(metaPath);
+                    AssetDatabase.ImportAsset(path);
+                    ti.SetTextureSettings(settings);
+                    ti.SetPlatformTextureSettings(pset);
+                }
+            }
+        }
         public void Generate() {
             foreach (var texture in textures) {
                 var path = AssetDatabase.GetAssetPath(texture);
-
                 TextureImporter ti = AssetImporter.GetAtPath(path) as TextureImporter;
+
                 if (ti) {
-                    // This removes any possible lingering SpriteMeta data
-                    if (ti.spriteImportMode == SpriteImportMode.Multiple) {
-                        ti.spritesheet = null;
-                        ti.spriteImportMode = SpriteImportMode.Single;
-                        AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+                    var metaPath = path + ".meta";
+                    if (File.Exists(metaPath)) {
+                        TextureImporterSettings settings = new();
+                        ti.ReadTextureSettings(settings);
+                        var pset = ti.GetDefaultPlatformTextureSettings();
+                        File.Delete(metaPath);
+                        AssetDatabase.ImportAsset(path);
+                        ti.SetTextureSettings(settings);
+                        ti.SetPlatformTextureSettings(pset);
                     }
 
                     ti.isReadable = true;
                     ti.textureType = TextureImporterType.Sprite;
                     ti.spriteImportMode = SpriteImportMode.Multiple;
-                    ti.mipmapEnabled = false;
                     ti.filterMode = FilterMode.Point;
+                    ti.mipmapEnabled = false;
 
                     FillAtlas(ti, path);
-                    MakeClips(path, texture.name);
+                    MakeClips(ti, path, texture.name);
                 }
             }
         }
@@ -80,13 +101,16 @@ namespace Elang
             List<SpriteMetaData> spritesheet = new List<SpriteMetaData>();
 
             for (int i = 0; i < cells.Count; i++) {
-                spritesheet.Add(cells[i].mold(height));
+                var metaData = cells[i].mold(height);
+                spritesheet.Add(metaData);
             }
 
             ti.spritesheet = spritesheet.ToArray();
-            AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+            EditorUtility.SetDirty(ti);
+            ti.SaveAndReimport();
         }
-        void MakeClips(string path, string textureName) {
+
+        void MakeClips(TextureImporter ti, string path, string textureName) {
             if (clips.Count > 0 && makeClipAnimations) {
                 var dir = path.Substring(0, path.LastIndexOf('/'));
                 string folderName = textureName + "Anim";
@@ -99,10 +123,21 @@ namespace Elang
                     AssetDatabase.CreateFolder(dir, folderName);
 
                 AnimatorController controller = makeController ? CreateController(animDir, textureName) : null;
-                Sprite[] sprites = AssetDatabase.LoadAllAssetsAtPath(path).OfType<Sprite>().ToArray();
 
-                for (int i = 0; i < clips.Count; i++) {
-                    clips[i].createAnimationAsset(animDir, controller, sprites);
+                Dictionary<string, int> dict = new();
+                int i = 0;
+                foreach (var spr in ti.spritesheet) {
+                    dict.Add(spr.name, i++);
+                }
+
+                Sprite[] sprites = AssetDatabase.LoadAllAssetsAtPath(path).OfType<Sprite>().ToArray();
+                Sprite[] sprlist = new Sprite[sprites.Count()];
+                foreach (var spr in sprites) {
+                    sprlist[dict[spr.name]] = spr;
+                }
+
+                for (int c = 0; c < clips.Count; c++) {
+                    clips[c].CreateAnimationAsset(animDir, controller, sprlist);
                 }
             }
         }

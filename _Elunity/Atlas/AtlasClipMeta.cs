@@ -38,7 +38,7 @@ namespace Elang
             }
         }
 
-        public void createAnimationAsset(string animDir, AnimatorController controller, Sprite[] sprites) {
+        public void CreateAnimationAsset(string animDir, AnimatorController controller, Sprite[] sprites) {
             AnimationClip clip;
             string clipFilename = animDir + "/" + name + ".anim";
 

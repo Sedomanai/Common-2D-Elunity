@@ -21,8 +21,10 @@ namespace Elang
 
             if (GUILayout.Button("GENERATE!")) {
                 atlas.Generate();
-                EditorUtility.SetDirty(atlas);
-                serializedObject.ApplyModifiedProperties();
+            }
+
+            if (GUILayout.Button("CLEAR!")) {
+                atlas.Clear();
             }
 
             if (EditorGUI.EndChangeCheck()) {
