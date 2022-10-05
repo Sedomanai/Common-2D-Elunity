@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.IO;
 using UnityEngine;
 using UnityEditor.AssetImporters;
@@ -32,3 +33,4 @@ namespace Elang
         }
     }
 }
+#endif

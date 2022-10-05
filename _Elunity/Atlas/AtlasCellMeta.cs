@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using UnityEditor;
 using UnityEngine;
@@ -33,3 +34,4 @@ namespace Elang
         Int16 x, y, w, h, oX, oY;
     }
 }
+#endif
