@@ -10,7 +10,7 @@ namespace Elang
     /// </summary>
     [RequireComponent(typeof(BoxCollider2D))]
     [RequireComponent(typeof(Rigidbody2D))]
-    public class TopDown2D : Move2D
+    public class TopDown2D : MoveInput2D
     {
         protected Vector2 _axis;
         protected BoxCollider2D _box;
@@ -46,7 +46,7 @@ namespace Elang
             obj.SetLayer("Player Static Collider");
 
             //// Ignore collision with the original (yeets into stratosphere otherwise)
-            //Physics2D.IgnoreCollision(copybox, _box);
+            Physics2D.IgnoreCollision(copybox, _box);
         }
 
         protected virtual void Awake() {
@@ -55,7 +55,7 @@ namespace Elang
             _body.gravityScale = 0;
         }
 
-        void Update() {
+        void FixedUpdate() {
             Move(_body);
         }
     }
