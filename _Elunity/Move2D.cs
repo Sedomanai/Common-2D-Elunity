@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using DG.Tweening;
 using UnityEngine.InputSystem;
 
 namespace Elang {

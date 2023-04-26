@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine.Events;
 using UnityEngine;
+#if UNITY_STANDALONE_WIN
 using DG.Tweening;
+#endif
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
