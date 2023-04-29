@@ -5,7 +5,6 @@ using UnityEngine.Events;
 
 namespace Elang
 {
-    [RequireComponent(typeof(BoxCollider2D))]
     public class Projectile2D : MonoBehaviour
     {
         [SerializeField]
@@ -66,7 +65,7 @@ namespace Elang
         void OnTriggerStay2D(Collider2D collision) {
             if (_state == eProjectileState.Firing) {
                 var layer = 1 << collision.gameObject.layer;
-                if ((targetMask.value & layer) == layer) {
+				if ((targetMask.value & layer) == layer) {
                     Hit();
                     OnTargetHit.Invoke();
                     OnTargetHitCheck?.Invoke(_rootObject);
